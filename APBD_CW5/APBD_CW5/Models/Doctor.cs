@@ -11,9 +11,5 @@ public class Doctor
     public string Lastname { get; set; }
     public string Email { get; set; }
     
-    //public int IdPrescripton { get; set; }
-    
     public ICollection<Prescription> Prescriptions { get; set; }
-    //[ForeignKey("IdPrescripton")]
-    //public Prescription Prescription { get; set; }
 }

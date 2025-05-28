@@ -4,6 +4,7 @@ using APBD_CW5.DAL;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace APBD_CW5.Migrations
 {
     [DbContext(typeof(Hospital))]
-    partial class HospitalModelSnapshot : ModelSnapshot
+    [Migration("20250528175128_dodaniePozost5")]
+    partial class dodaniePozost5
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -144,7 +147,7 @@ namespace APBD_CW5.Migrations
 
                     b.HasIndex("IdMedicament");
 
-                    b.ToTable("Prescritpion_Medicament");
+                    b.ToTable("PrescritpionMedicaments");
                 });
 
             modelBuilder.Entity("APBD_CW5.Models.Prescription", b =>

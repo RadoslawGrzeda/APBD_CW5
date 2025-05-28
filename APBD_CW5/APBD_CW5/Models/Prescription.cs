@@ -14,10 +14,10 @@ public class Prescription
     public int IdPatient { get; set; }
     public int IdDoctor { get; set; }
 
-    [ForeignKey("IdPatient")]
+    [ForeignKey(nameof(IdPatient))]
     public Patient Patient { get; set; }
 
-    [ForeignKey("IdDoctor")]
+    [ForeignKey(nameof(IdDoctor))]
     public Doctor Doctor { get; set; }
 
     public ICollection<Prescritpion_Medicament> PrescritpionMedicaments { get; set; }
