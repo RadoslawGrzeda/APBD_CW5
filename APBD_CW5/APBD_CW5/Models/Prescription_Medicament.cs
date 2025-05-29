@@ -4,9 +4,9 @@ using Microsoft.EntityFrameworkCore;
 
 namespace APBD_CW5.Models;
 
-[PrimaryKey(nameof(IdPrescription),nameof(IdMedicament))]
-[Table("Prescritpion_Medicament")]
-public class Prescritpion_Medicament
+[Table("Prescription_Medicament")]
+[PrimaryKey(nameof(IdPrescription), nameof(IdMedicament))]
+public class Prescription_Medicament
 {
     
     public int Dose { get; set; }
@@ -14,10 +14,9 @@ public class Prescritpion_Medicament
     public int IdMedicament { get; set; }
     public int IdPrescription { get; set; }
     
-    [ForeignKey(nameof(IdPrescription))] 
+    [ForeignKey(nameof(IdPrescription))]
     public Prescription Prescription { get; set; }
-    //public ICollection<Prescription> Prescriptions  { get; set; }
-    
+
     [ForeignKey(nameof(IdMedicament))]
-    public Medicament Medicament  { get; set; }
+    public Medicament Medicament { get; set; }
 }

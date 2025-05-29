@@ -10,5 +10,6 @@ public class Medicament
     public string Description { get; set; }
     public string Type { get; set; }
     
-    public ICollection<Prescritpion_Medicament> PrescritpionMedicaments { get; set; }
+
+    public ICollection<Prescription_Medicament> Prescription_Medicaments { get; set; }
 }

@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace APBD_CW5.Migrations
 {
     [DbContext(typeof(Hospital))]
-    [Migration("20250523180431_dodaniePozostalych2")]
-    partial class dodaniePozostalych2
+    [Migration("20250529181505_Initial")]
+    partial class Initial
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -90,9 +90,6 @@ namespace APBD_CW5.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("IdPrescripton")
-                        .HasColumnType("int");
-
                     b.Property<string>("LastName")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -131,7 +128,7 @@ namespace APBD_CW5.Migrations
                     b.ToTable("Prescriptions");
                 });
 
-            modelBuilder.Entity("APBD_CW5.Models.Prescritpion_Medicament", b =>
+            modelBuilder.Entity("APBD_CW5.Models.Prescription_Medicament", b =>
                 {
                     b.Property<int>("IdPrescription")
                         .HasColumnType("int");
@@ -146,16 +143,11 @@ namespace APBD_CW5.Migrations
                     b.Property<int>("Dose")
                         .HasColumnType("int");
 
-                    b.Property<int?>("PrescriptionIdPrescripton")
-                        .HasColumnType("int");
-
                     b.HasKey("IdPrescription", "IdMedicament");
 
                     b.HasIndex("IdMedicament");
 
-                    b.HasIndex("PrescriptionIdPrescripton");
-
-                    b.ToTable("PrescritpionMedicaments");
+                    b.ToTable("Prescription_Medicament");
                 });
 
             modelBuilder.Entity("APBD_CW5.Models.Prescription", b =>
@@ -177,17 +169,23 @@ namespace APBD_CW5.Migrations
                     b.Navigation("Patient");
                 });
 
-            modelBuilder.Entity("APBD_CW5.Models.Prescritpion_Medicament", b =>
+            modelBuilder.Entity("APBD_CW5.Models.Prescription_Medicament", b =>
                 {
-                    b.HasOne("APBD_CW5.Models.Medicament", null)
-                        .WithMany("PrescritpionMedicaments")
+                    b.HasOne("APBD_CW5.Models.Medicament", "Medicament")
+                        .WithMany("Prescription_Medicaments")
                         .HasForeignKey("IdMedicament")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("APBD_CW5.Models.Prescription", null)
-                        .WithMany("PrescritpionMedicaments")
-                        .HasForeignKey("PrescriptionIdPrescripton");
+                    b.HasOne("APBD_CW5.Models.Prescription", "Prescription")
+                        .WithMany("Prescription_Medicaments")
+                        .HasForeignKey("IdPrescription")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Medicament");
+
+                    b.Navigation("Prescription");
                 });
 
             modelBuilder.Entity("APBD_CW5.Models.Doctor", b =>
@@ -197,7 +195,7 @@ namespace APBD_CW5.Migrations
 
             modelBuilder.Entity("APBD_CW5.Models.Medicament", b =>
                 {
-                    b.Navigation("PrescritpionMedicaments");
+                    b.Navigation("Prescription_Medicaments");
                 });
 
             modelBuilder.Entity("APBD_CW5.Models.Patient", b =>
@@ -207,7 +205,7 @@ namespace APBD_CW5.Migrations
 
             modelBuilder.Entity("APBD_CW5.Models.Prescription", b =>
                 {
-                    b.Navigation("PrescritpionMedicaments");
+                    b.Navigation("Prescription_Medicaments");
                 });
 #pragma warning restore 612, 618
         }

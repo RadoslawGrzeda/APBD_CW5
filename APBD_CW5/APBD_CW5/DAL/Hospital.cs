@@ -9,8 +9,7 @@ public class Hospital:DbContext
     public DbSet<Doctor> Doctors { get; set; }
     public DbSet<Medicament> Medicaments { get; set; }
     public DbSet<Prescription> Prescriptions { get; set; }
-    public DbSet<Prescritpion_Medicament> PrescritpionMedicaments { get; set; }
-
+    public DbSet<Prescription_Medicament> PrescriptionMedicaments { get; set; }
     protected Hospital()
     {
     }
@@ -21,10 +20,7 @@ public class Hospital:DbContext
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
-        modelBuilder.Entity<Prescritpion_Medicament>(a =>
-        {
-
-            a.HasKey(e => new { e.IdPrescription, e.IdMedicament });
-        });
+        modelBuilder.Entity<Prescription_Medicament>().HasKey(pm => new { pm.IdPrescription, pm.IdMedicament });
     }
+
 }

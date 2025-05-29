@@ -6,18 +6,11 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace APBD_CW5.Migrations
 {
     /// <inheritdoc />
-    public partial class dodaniePozostalych : Migration
+    public partial class Initial : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.AddColumn<int>(
-                name: "IdPrescripton",
-                table: "Patients",
-                type: "int",
-                nullable: false,
-                defaultValue: 0);
-
             migrationBuilder.CreateTable(
                 name: "Doctors",
                 columns: table => new
@@ -49,6 +42,21 @@ namespace APBD_CW5.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "Patients",
+                columns: table => new
+                {
+                    IdPatient = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    FirstName = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    LastName = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    BirthDate = table.Column<DateTime>(type: "datetime2", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Patients", x => x.IdPatient);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "Prescriptions",
                 columns: table => new
                 {
@@ -77,32 +85,35 @@ namespace APBD_CW5.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "PrescritpionMedicaments",
+                name: "Prescription_Medicament",
                 columns: table => new
                 {
-                    IdMedicament = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    Dose = table.Column<int>(type: "int", nullable: false),
-                    Details = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    IdMedicament = table.Column<int>(type: "int", nullable: false),
                     IdPrescription = table.Column<int>(type: "int", nullable: false),
-                    MedicamentIdMedicament = table.Column<int>(type: "int", nullable: false),
-                    PrescriptionIdPrescripton = table.Column<int>(type: "int", nullable: true)
+                    Dose = table.Column<int>(type: "int", nullable: false),
+                    Details = table.Column<string>(type: "nvarchar(max)", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_PrescritpionMedicaments", x => x.IdMedicament);
+                    table.PrimaryKey("PK_Prescription_Medicament", x => new { x.IdPrescription, x.IdMedicament });
                     table.ForeignKey(
-                        name: "FK_PrescritpionMedicaments_Medicaments_MedicamentIdMedicament",
-                        column: x => x.MedicamentIdMedicament,
+                        name: "FK_Prescription_Medicament_Medicaments_IdMedicament",
+                        column: x => x.IdMedicament,
                         principalTable: "Medicaments",
                         principalColumn: "IdMedicament",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_PrescritpionMedicaments_Prescriptions_PrescriptionIdPrescripton",
-                        column: x => x.PrescriptionIdPrescripton,
+                        name: "FK_Prescription_Medicament_Prescriptions_IdPrescription",
+                        column: x => x.IdPrescription,
                         principalTable: "Prescriptions",
-                        principalColumn: "IdPrescripton");
+                        principalColumn: "IdPrescripton",
+                        onDelete: ReferentialAction.Cascade);
                 });
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Prescription_Medicament_IdMedicament",
+                table: "Prescription_Medicament",
+                column: "IdMedicament");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Prescriptions_IdDoctor",
@@ -113,23 +124,13 @@ namespace APBD_CW5.Migrations
                 name: "IX_Prescriptions_IdPatient",
                 table: "Prescriptions",
                 column: "IdPatient");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_PrescritpionMedicaments_MedicamentIdMedicament",
-                table: "PrescritpionMedicaments",
-                column: "MedicamentIdMedicament");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_PrescritpionMedicaments_PrescriptionIdPrescripton",
-                table: "PrescritpionMedicaments",
-                column: "PrescriptionIdPrescripton");
         }
 
         /// <inheritdoc />
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
-                name: "PrescritpionMedicaments");
+                name: "Prescription_Medicament");
 
             migrationBuilder.DropTable(
                 name: "Medicaments");
@@ -140,9 +141,8 @@ namespace APBD_CW5.Migrations
             migrationBuilder.DropTable(
                 name: "Doctors");
 
-            migrationBuilder.DropColumn(
-                name: "IdPrescripton",
-                table: "Patients");
+            migrationBuilder.DropTable(
+                name: "Patients");
         }
     }
 }

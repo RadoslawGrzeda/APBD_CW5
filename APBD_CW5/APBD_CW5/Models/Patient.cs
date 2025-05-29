@@ -15,6 +15,4 @@ public class Patient
     public DateTime BirthDate { get; set; }
     
     public ICollection<Prescription> Prescriptions { get; set; }
-    //[ForeignKey("IdPrescripton")]
-    //public Prescription Prescription { get; set; }
 }

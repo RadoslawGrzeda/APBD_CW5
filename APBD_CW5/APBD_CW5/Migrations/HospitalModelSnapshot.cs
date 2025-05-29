@@ -125,7 +125,7 @@ namespace APBD_CW5.Migrations
                     b.ToTable("Prescriptions");
                 });
 
-            modelBuilder.Entity("APBD_CW5.Models.Prescritpion_Medicament", b =>
+            modelBuilder.Entity("APBD_CW5.Models.Prescription_Medicament", b =>
                 {
                     b.Property<int>("IdPrescription")
                         .HasColumnType("int");
@@ -144,7 +144,7 @@ namespace APBD_CW5.Migrations
 
                     b.HasIndex("IdMedicament");
 
-                    b.ToTable("Prescritpion_Medicament");
+                    b.ToTable("Prescription_Medicament");
                 });
 
             modelBuilder.Entity("APBD_CW5.Models.Prescription", b =>
@@ -166,16 +166,16 @@ namespace APBD_CW5.Migrations
                     b.Navigation("Patient");
                 });
 
-            modelBuilder.Entity("APBD_CW5.Models.Prescritpion_Medicament", b =>
+            modelBuilder.Entity("APBD_CW5.Models.Prescription_Medicament", b =>
                 {
                     b.HasOne("APBD_CW5.Models.Medicament", "Medicament")
-                        .WithMany("PrescritpionMedicaments")
+                        .WithMany("Prescription_Medicaments")
                         .HasForeignKey("IdMedicament")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("APBD_CW5.Models.Prescription", "Prescription")
-                        .WithMany("PrescritpionMedicaments")
+                        .WithMany("Prescription_Medicaments")
                         .HasForeignKey("IdPrescription")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -192,7 +192,7 @@ namespace APBD_CW5.Migrations
 
             modelBuilder.Entity("APBD_CW5.Models.Medicament", b =>
                 {
-                    b.Navigation("PrescritpionMedicaments");
+                    b.Navigation("Prescription_Medicaments");
                 });
 
             modelBuilder.Entity("APBD_CW5.Models.Patient", b =>
@@ -202,7 +202,7 @@ namespace APBD_CW5.Migrations
 
             modelBuilder.Entity("APBD_CW5.Models.Prescription", b =>
                 {
-                    b.Navigation("PrescritpionMedicaments");
+                    b.Navigation("Prescription_Medicaments");
                 });
 #pragma warning restore 612, 618
         }
