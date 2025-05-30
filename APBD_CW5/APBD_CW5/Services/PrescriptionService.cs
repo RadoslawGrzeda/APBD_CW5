@@ -4,6 +4,8 @@ using APBD_CW5.DTO;
 using APBD_CW5.Models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Migrations.Operations;
+using Prescription = APBD_CW5.Models.Prescription;
+using Prescription_Medicament = APBD_CW5.Models.Prescription_Medicament;
 
 namespace APBD_CW5.Services;
 
@@ -69,10 +71,12 @@ public class PrescriptionService : IPrescriptionService
                 Dose = m.Dose,
                 Details = m.Details
             });
-            _context.Prescriptions.Add(prescription);
+        }
+        
+
+        _context.Prescriptions.Add(prescription);
             await _context.SaveChangesAsync();
         }
     }
     
     
-}

@@ -6,5 +6,6 @@ namespace APBD_CW5.Services;
 public interface IPrescriptionService
 {
     Task AddPrescriptionAsync(AddPrescriptionDto dto);
+    
 
 }
